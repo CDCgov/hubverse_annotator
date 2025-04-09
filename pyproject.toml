@@ -11,6 +11,7 @@ keywords = ["hubverse", "application", "infectious-disease-modeling", "data-scie
 
 [tool.poetry.dependencies]
 python = "^3.12"
+streamlit = "^1.44.1"
 
 [tool.poetry.urls]
 "Repository Issues" = "https://github.com/CDCgov/hubverse_annotator/issues"
