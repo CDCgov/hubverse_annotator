@@ -119,10 +119,6 @@ repos:
 ################################################################################
 # SECURITY
 ################################################################################
-# -   repo: https://github.com/gitleaks/gitleaks
-#     rev: v8.19.0
-#     hooks:
-#     -   id: gitleaks
 -   repo: https://github.com/Yelp/detect-secrets
     rev: v1.5.0
     hooks:
@@ -139,15 +135,4 @@ repos:
     hooks:
     -   id: typos
         args: ["--force-exclude"]
-################################################################################
-# COMMIT MESSAGES
-################################################################################
--   repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.2.1
-    hooks:
-    -   id: commitizen
--   repo: https://github.com/jorisroovers/gitlint
-    rev:  v0.19.1
-    hooks:
-    -   id: gitlint
 ################################################################################
