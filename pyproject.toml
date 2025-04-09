@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "hubverse-annotator"
+version = "0.0.1"
+description = "Local web application that loads hubverse formatted tables and plots model forecasts, enabling the end user to compare and annotate models."
+authors = ["UPX3 <127630341+AFg6K7h4fhy2@users.noreply.github.com>"]
+license = "Apache-2.0"
+readme = "README.md"
+package-mode = false
+repository = "https://github.com/CDCgov/hubverse_annotator/"
+keywords = ["hubverse", "application", "infectious-disease-modeling", "data-science"]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[tool.poetry.urls]
+"Repository Issues" = "https://github.com/CDCgov/hubverse_annotator/issues"
+"CFA Homepage" = "https://www.cdc.gov/forecast-outbreak-analytics/index.html"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff.lint.mccabe]
+max-complexity = 15
