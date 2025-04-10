@@ -44,20 +44,20 @@ def main():
 
     # forecasts annotation section
     st.markdown("#### Forecast A")
-    st.selectbox("Status A:", ["Preferred", "Omitted", "None"])
-    st.text_input("Comments B:")
+    st.selectbox("Status", ["Preferred", "Omitted", "None"], key="status_a")
+    st.text_input("Comments", key="comments_a")
 
     st.markdown("#### Forecast B")
-    st.selectbox("Status A:", ["Preferred", "Omitted", "None"])
-    st.text_input("Comments B:")
+    st.selectbox("Status", ["Preferred", "Omitted", "None"], key="status_b")
+    st.text_input("Comments", key="comments_b")
 
     st.markdown("#### Forecast C")
-    st.selectbox("Status C:", ["Preferred", "Omitted", "None"])
-    st.text_input("Comments C:")
+    st.selectbox("Status", ["Preferred", "Omitted", "None"], key="status_c")
+    st.text_input("Comments", key="comments_c")
 
     st.markdown("#### Forecast D")
-    st.selectbox("Status D:", ["Preferred", "Omitted", "None"])
-    st.text_input("Comments D:")
+    st.selectbox("Status", ["Preferred", "Omitted", "None"], key="status_d")
+    st.text_input("Comments", key="comments_d")
 
     # export button
     if st.button("Export forecasts"):
