@@ -20,11 +20,11 @@ def main():
         "Upload Hubverse File", type=["csv", "parquet"]
     )
 
-    # two-column layout for reference Date and location
+    # two-column layout for reference date and location
     col1, col2 = st.columns(2)
     with col1:
         reference_date = st.date_input(
-            "Reference Date", value=datetime.date(2024, 1, 1)
+            "Reference Date", value=datetime.date(2025, 4, 10)
         )
     with col2:
         location = st.selectbox(
