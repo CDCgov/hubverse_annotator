@@ -8,29 +8,37 @@ To run: poetry run streamlit run app.py
 
 import datetime
 
+import polars as pl
 import streamlit as st
 
 
 def main():
     st.title("Forecast Annotator")
-
-    # ile upload section
-    # st.subheader("Upload Hubverse File")
     uploaded_file = st.file_uploader(
         "Upload Hubverse File", type=["csv", "parquet"]
     )
-
     # two-column layout for reference date and location
     col1, col2 = st.columns(2)
     with col1:
-        reference_date = st.date_input(
-            "Reference Date", value=datetime.date(2025, 4, 10)
-        )
+        today = datetime.datetime.today().date()
+        reference_date = st.date_input("Reference Date", value=today)
     with col2:
         location = st.selectbox(
             "Location", ["Arizona", "New York", "Nevada", "New Jersey"]
         )
-
+    # load the hubverse data
+    if uploaded_file is not None:
+        if uploaded_file.endswith("parquet"):
+            smhub_table = pl.read_parquet(uploaded_file)
+        else:
+            smhub_table = pl.read_csv(uploaded_file)
+        # ensure date cols are polars ISO8601 dates
+        smhub_table = smhub_table.with_columns(
+            pl.col("reference_table").str.strptime(pl.Date, fmt="%Y-%m-%d"),
+            pl.col("target_end_date").str.strptime(pl.Date, fmt="%Y-%m-%d"),
+        )
+        # still need to ensure
+        smhub_table = smhub_table.filter(pl.col("location") == location)
     st.markdown(f"## Forecasts For: {location}")
     st.markdown(f"## Reference Date: {reference_date}")
     st.area_chart(
