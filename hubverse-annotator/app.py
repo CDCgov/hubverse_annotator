@@ -8,6 +8,7 @@ To run: poetry run streamlit run app.py
 
 import datetime
 
+import forecasttools
 import polars as pl
 import streamlit as st
 
@@ -26,29 +27,31 @@ def main():
         location = st.selectbox(
             "Location", ["Arizona", "New York", "Nevada", "New Jersey"]
         )
+    # get location abbreviation
+    two_letter_loc_abbr = forecasttools.location_lookup(
+        location_vector=[location], location_format="long_name"
+    )["location_code"].item()
     # load the hubverse data
     if uploaded_file is not None:
-        if uploaded_file.endswith("parquet"):
+        if uploaded_file.name.endswith("parquet"):
             smhub_table = pl.read_parquet(uploaded_file)
         else:
             smhub_table = pl.read_csv(uploaded_file)
-        # ensure date cols are polars ISO8601 dates
-        smhub_table = smhub_table.with_columns(
-            pl.col("reference_table").str.strptime(pl.Date, fmt="%Y-%m-%d"),
-            pl.col("target_end_date").str.strptime(pl.Date, fmt="%Y-%m-%d"),
+        smhub_table = smhub_table.filter(
+            pl.col("location") == two_letter_loc_abbr
         )
-        # still need to ensure
-        smhub_table = smhub_table.filter(pl.col("location") == location)
+        print(smhub_table)
     st.markdown(f"## Forecasts For: {location}")
     st.markdown(f"## Reference Date: {reference_date}")
-    st.area_chart(
-        {
-            "Forecast A": [3, 6, 9, 2, 5],
-            "Forecast B": [2, 4, 8, 3, 7],
-            "Forecast C": [1, 7, 5, 6, 2],
-            "Forecast D": [5, 4, 3, 2, 6],
-        }
-    )
+
+    # st.area_chart(
+    #     {
+    #         "Forecast A": [3, 6, 9, 2, 5],
+    #         "Forecast B": [2, 4, 8, 3, 7],
+    #         "Forecast C": [1, 7, 5, 6, 2],
+    #         "Forecast D": [5, 4, 3, 2, 6],
+    #     }
+    # )
 
     # forecasts annotation section
     st.markdown("#### Forecast A")
